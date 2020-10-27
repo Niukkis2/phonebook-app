@@ -1,9 +1,9 @@
-const express = require('express')
-const morgan = require('morgan')
+import express, { json } from 'express'
+import morgan, { token } from 'morgan'
 const app = express()
 
-app.use(express.json())
-morgan.token('body', (req, res) => JSON.stringify(req.body))
+app.use(json())
+token('body', (req, res) => JSON.stringify(req.body))
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body', {
     skip: (req, res) => {
         return req.method.localeCompare('POST') != 0
