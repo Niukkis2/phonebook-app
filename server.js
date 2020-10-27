@@ -35,7 +35,7 @@ let persons = [
 ]
 
 app.get('/', (req, res) => {
-    res.send('<h1>Hello</h1>')
+    res.sendFile(path.join(__dirname, 'build', 'index.html'))
 })
 
 app.get('/api/persons/:id', (req, res) => {
