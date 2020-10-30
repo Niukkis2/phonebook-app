@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "build:ui": "rm -rf build && cd c:/users/niko/programming/fsopen/part2/phonebook && npm run build --prod && cp -r build c:/users/niko/programming/server",
+    "build:ui": "rm -rf build && cd ../fsopen/part2/phonebook && npm run build --prod && cp -r build ../../../server",
     "deploy": "git push heroku master",
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && npm run deploy",
     "logs:prod": "heroku logs --tail"
@@ -15,9 +15,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "http": "0.0.1-security",
+    "mongoose": "^5.10.11",
     "morgan": "^1.10.0",
     "path": "^0.12.7"
   },
