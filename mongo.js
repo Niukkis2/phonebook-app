@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const uniqueValidator = require('mongoose-unique-validator')
 
 if (process.argv.length<3) {
     console.log('give password as argument')
@@ -14,9 +15,10 @@ const url = `mongodb+srv://user0:${password}@cluster0.kjzsv.mongodb.net/phoneboo
 mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true})
 
 const personSchema = new mongoose.Schema({
-    name: String,
-    number: String
+    name: { type: String, required: true, unique: true },
+    number: { type: String, required: true }
 })
+personSchema.plugin(uniqueValidator)
 
 const Person = mongoose.model('Person', personSchema)
 
