@@ -12,7 +12,7 @@ const number = process.argv[4]
 
 const url = `mongodb+srv://user0:${password}@cluster0.kjzsv.mongodb.net/phonebook-app?retryWrites=true&w=majority`
 
-mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true})
+mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
 
 const personSchema = new mongoose.Schema({
     name: { type: String, required: true, unique: true },
@@ -37,7 +37,7 @@ const person = new Person({
     number: number
 })
 
-person.save().then(res => {
+person.save().then(() => {
     console.log('person saved')
     mongoose.connection.close()
 })

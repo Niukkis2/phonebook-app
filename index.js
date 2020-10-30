@@ -8,10 +8,10 @@ const cors = require('cors')
 app.use(cors())
 app.use(express.static('build'))
 app.use(express.json())
-morgan.token('body', (req, res) => JSON.stringify(req.body))
+morgan.token('body', (req) => JSON.stringify(req.body))
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body', {
-    skip: (req, res) => {
-        return req.method.localeCompare('POST') != 0
+    skip: (req) => {
+        return req.method.localeCompare('POST') !== 0
     }
 }))
 
@@ -45,9 +45,9 @@ app.put('/api/persons/:id', (req, res, next) => {
         })
     }
     Person.findOneAndUpdate(
-        {name: req.body.name}, 
-        {number: newNumber}, 
-        {returnOriginal: false}).then(updated => {
+        { name: req.body.name },
+        { number: newNumber },
+        { returnOriginal: false }).then(updated => {
         res.json(updated)
     }).catch(error => next(error))
 })
@@ -63,15 +63,15 @@ app.get('/api/persons/:id', (req, res, next) => {
 })
 
 app.delete('/api/persons/:id', (req, res, next) => {
-    Person.findByIdAndRemove(req.params.id).then(deletedPerson => {
+    Person.findByIdAndRemove(req.params.id).then(() => {
         res.status(204).end()
     }).catch(error => next(error))
 })
 
 app.get('/info', async (req, res) => {
     const dateDisplay = new Date()
-    res.send("<h3>Phonebook has info for " + await Person.countDocuments({}) + " people</h3>" + 
-             "<h3>" + dateDisplay + "</h3>")
+    res.send('<h3>Phonebook has info for ' + await Person.countDocuments({}) + ' people</h3>' +
+             '<h3>' + dateDisplay + '</h3>')
 })
 
 const unknownEndPoint = (req, res) => {
@@ -85,7 +85,7 @@ const errorHandler = (error, req, res, next) => {
     if (error.name === 'CastError') {
         return res.status(400).send({ error: 'malformatted id' })
     } else if (error.name === 'ValidationError') {
-        return res.status(400).json({ error: error.message})
+        return res.status(400).json({ error: error.message })
     }
     next(error)
 }
